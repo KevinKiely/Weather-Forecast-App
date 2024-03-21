@@ -23,13 +23,34 @@
 <main class="container mt-4">
   <div class="container text-center">
     <div class="row row-cols-2 gap-5">
-      <div class="col-3 border border-dark border-2 rounded p-3 fs-5">Search Bar Goes Here</div>
 
-      <div class="col-8 border border-dark border-2 rounded p-3 fs-2">Today's Forecast Goes Here</div>
+      <!-- Search Bar for Cities-->
+      <div class="col-4 border border-2 rounded p-3 fs-5">
+        <h4> Search for a City:</h4>
+        <input class="m-1 w-100" placeholder="City Name" id="citySearchInput"> </input>
+        <button class="btn btn-primary p-3 fs-5 mt-4 w-100" id="searchBtn"> Search</button>
+      </div>
 
-      <div class="col-3 border border-dark border-2 rounded p-3 fs-5">Column</div>
 
-      <div class="col-8 border border-dark border-2 rounded p-3 fs-2">Column</div>
+
+
+
+
+
+      <!-- Today's Forecast w/information and picture-->
+      <div class="col-7 border border-dark border-2 rounded p-3 fs-2">
+        <h2> Chosen City & Today's Date, picture?</h2>
+        <ul id="">
+
+        </ul>
+      </div>
+
+      <!--Saved city search history -->
+      <div class="border border-2 rounded col-4 p-3 fs-5"> Search History Here stored using Local Storage</div>
+
+
+      <!--Future Forecast Cards to be populated by API call--> 
+      <div class="col-7 border border-dark border-2 rounded p-3 fs-2">Column</div>
 
 
     </div>
