@@ -18,16 +18,47 @@ searchBtn.addEventListener('click',findCity);
 function findCity() {
     console.log(cityName.value)
     var city=cityName.value;
+    // Add to local storage AND the Search Container
+
+    // We initialize a HOLDER variable
+    var savedCities;
+    // We CHECK for exisiting data
+    if(!localStorage.getItem('cities')) {
+        // NO SAVED data --> Initialize Dataset
+        localStorage.setItem('cities', JSON.stringify([]));  // "[]"
+        savedCities = [];
+    } else {
+        // if data EXISTS --> GRAB saved JSON data --> PARSE (Convert) the JSON into JavaScript (just cause it is easier to use)
+       // savedCities = JSON.parse(localStorage.getItem('cities'));
+        var jsonCitites = localStorage.getItem('cities');
+        savedCities = JSON.parse(jsonCitites);
+    }
+    // Parse 
+
+    // -- check state -- //
+    console.log("History: ", savedCities);
+    console.log("Type: ", typeof savedCities);
+    
+    // NOW we can ADD / Remove / MODIFY the (JAVASCRIPT) data
+    savedCities.push(city);
+    
+    // -- check state -- //
+    console.log("History: ", savedCities);
+    console.log("Type: ", typeof savedCities);
+
+    // WE HAVE TO SAVE THE NEW DATA BACK TO LOCAL STORAGE
+    localStorage.setItem('cities', JSON.stringify(savedCities));
 
     coordinatesURL=`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${APIkey}`;
-
-    fetch(coordinatesURL)
+    // we are making an ASYNC request --> Event Loop --> 
+    fetch(coordinatesURL)  // --> Returns A PROMISE  asyncOperation().then(data).catch(error)
     .then(function(response){
-        if(response.ok) {
+        console.log("Response Object: ", response)  // is NOT our data yet --> but the PROMISE to pass it along (DATASTREAM)
+        if(response.ok) {  // response.status == 200
             return response.json();
         } 
     })
-    .then(function(data){
+    .then(function(data){  // the 'data' paramter is our RETURNED DATASET
         var lat = data[0].lat;
         var lon = data[0].lon;
         weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`;
@@ -42,6 +73,11 @@ function findCity() {
         console.log(data);
         var chosenCity = data.city.name;
         var today = data.list[0].dt_txt;
+
+        // clearout the previous data
+       // infoOne.textContent = "";
+        infoOne.innerHTML = "";
+        // .remove()
 
         // This is the forecast information for today
         dateOne.textContent = `${chosenCity},${today}`;
@@ -63,6 +99,7 @@ function findCity() {
         // This is the forecast information for the next 4 days
         var weatherStats = data.list;
         console.log(weatherStats);
+        fourDayForecast.textContent='';
 
         for (var i=7; i < 40; i +=8) {
             //New Card, one per day for the next 4 days
@@ -97,5 +134,7 @@ function findCity() {
         }
     })
 
+    // this is code AFTER the ASYNC REQuest
+    // This code would run before we got our RESPONSE back
 
 };
