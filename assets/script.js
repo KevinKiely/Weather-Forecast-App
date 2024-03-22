@@ -64,34 +64,38 @@ function findCity() {
         var weatherStats = data.list;
         console.log(weatherStats);
 
-        for (var i=8; i < 40; i +=8) {
+        for (var i=7; i < 40; i +=8) {
             //New Card, one per day for the next 4 days
             var forecastCard= document.createElement('card');
-            forecastCard.classList= 'text-light bg-dark';
+            forecastCard.classList= 'text-light bg-dark m-3';
 
             // Adding Date and forecast information, appending to cards
             var nextDay= document.createElement('h6');
             nextDay.textContent=weatherStats[i].dt_txt;
             nextDay.classList= 'text-light bg-dark fs-2';
             forecastCard.appendChild(nextDay);
-            
 
+            // Adding Temperature information to the forecast
             var nextDayTemp= document.createElement('p');
-            nextDayTemp.textContent=weatherStats[i].main.temp;
-            nextDayTemp.classList= 'text-light bg=dark fs=4';
+            nextDayTemp.textContent=`Temperature: ${weatherStats[i].main.temp} Degrees`;
+            nextDayTemp.classList= 'text-light bg-dark fs-4';
             forecastCard.appendChild(nextDayTemp);
 
+            //Adding Windspeed information to the forecast
+            var nextDayWind= document.createElement('p');
+            nextDayWind.textContent=`Windspeed: ${weatherStats[i].wind.speed} MPH`;
+            nextDayWind.classList= 'text-light bg-dark fs-4';
+            forecastCard.appendChild(nextDayWind);
 
-
+            // Adding Humidity information to the forecast
+            var nextDayHumidity= document.createElement('p');
+            nextDayHumidity.textContent=`Humidity: ${weatherStats[i].main.humidity}%`;
+            nextDayHumidity.classList='text-light bg-dark fs-4';
+            forecastCard.appendChild(nextDayHumidity);
+            
             fourDayForecast.appendChild(forecastCard);
-
-
-
-
-
         }
-
-
-        
     })
+
+
 };
